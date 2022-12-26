@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/TextPlugin.min.js"></script>
+		<title>GreenSock</title>
+		<style>
+			body {
+				padding: 20rem;
+			}
+			.box {
+				width: 200px;
+				height: 200px;
+				background-color: aqua;
+			}
+			#message {
+				font-size: 2rem;
+				color: aqua;
+			}
+			.button {
+				padding: 1rem;
+				color: brown;
+				font-size: 2rem;
+				font-weight: 700;
+			}
+			.img {
+				width: 300px;
+				height: 232px;
+				background-image: url(../img/R.jpeg);
+        object-fit: cover;
+			}
+		</style>
+	</head>
+	<body>
+		<button class="button" onclick="animation()">Запустить анимацию</button>
+		<p id="message">Здесь будет выводиться текст</p>
+		<div class="box"></div>
+		<div class="img"></div>
+
+		<script>
+			window.onload = function () {
+				let messageText = document.getElementById("message");
+				gsap.to(messageText, {
+					delay: 5,
+					duration: 5,
+					color: "red",
+					text: "Hi, I`m from JS & GSAP",
+				});
+			};
+
+			gsap.to(".box", {
+				rotation: "random([45,-568,180])",
+				x: "random([-400, 8, 1000], [400, 500, -200], 250)",
+				duration: 10,
+			});
+
+			function animation() {
+				let img = document.querySelector(".img");
+
+				gsap.to(img, {
+					delay: 1,
+					keyframes: [
+						{x: 300, duration: 3},
+            {y: 100, duration: 3},
+            {scaleY: 0, duration: 2},
+            {y: -400, duration: -1},
+            {transformPerspective: 500},
+            {autoAlpha: 0},
+					],
+				});
+			}
+		</script>
+	</body>
+</html>

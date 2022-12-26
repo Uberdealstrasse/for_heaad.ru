@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DZ-12</title>
+
+		<style>
+			div {
+				width: 100px;
+				height: 100px;
+				margin-top: 20px;
+			}
+
+			#first-square {
+				background-color: blueviolet;
+			}
+			#second-square {
+				background-color: brown;
+			}
+			#third-square {
+				background-color: forestgreen;
+			}
+			#big {
+				width: 500px;
+				height: 500px;
+				background-color: grey;
+				position: absolute;
+				top: 100px;
+				left: 35%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="big"></div>
+		<div class="square" id="first-square"></div>
+		<div class="square" id="second-square"></div>
+		<div class="square" id="third-square"></div>
+
+		<script>
+			let squares = document.querySelectorAll("div.square");
+			let square_Big = document.getElementById("big");
+
+			// // ПЕРЕТАСКИВАНИЕ МНОГИХ КУПЮР
+			for (square of squares) {
+				square.onmousedown = function (e) {
+					square = e.currentTarget;
+					square.style.position = "absolute";
+					square.style.zIndex = 1000;
+
+					// console.log("click on square");
+					// устанавливаем слушателя
+					document.addEventListener("mousemove", moveElement);
+
+					// по отпусканию лкм удаляем слушателя
+					square.onmouseup = function () {
+						document.removeEventListener("mousemove", moveElement);
+						square.style.zIndex = 1;
+
+						let square_top = square.getBoundingClientRect().top;
+						let square_left = square.getBoundingClientRect().left;
+						let square_right = square.getBoundingClientRect().right;
+						let square_bottom = square.getBoundingClientRect().bottom;
+
+						let square_Big_top = square_Big.getBoundingClientRect().top;
+						let square_Big_left = square_Big.getBoundingClientRect().left;
+						let square_Big_right = square_Big.getBoundingClientRect().right;
+						let square_Big_bottom = square_Big.getBoundingClientRect().bottom;
+
+						if (
+							square_top > square_Big_top &&
+							square_left > square_Big_left &&
+							square_right < square_Big_right &&
+							square_bottom < square_Big_bottom
+						) {
+							square.hidden = true;
+
+							let squareColor = getComputedStyle(square).backgroundColor;
+							square_Big.style.backgroundColor = squareColor;
+						}
+					};
+
+					// отслеживаем координаты
+					function moveElement(event) {
+						let x = event.clientX - 50;
+						let y = event.clientY - 70;
+
+						square.style.top = y + "px";
+						square.style.left = x + "px";
+						// console.log(event);
+					}
+				};
+				square.ondragstart = function () {
+					return false;
+				};
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+			integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+			crossorigin="anonymous"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+		/>
+		<title>Кофемашина</title>
+		<style>
+			body {
+				font-family: "Oswald", sans-serif;
+				background-image: url(../img/coffee.jpeg);
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.coffee_block {
+				background-color: rgba(201, 144, 22);
+				border: 1px solid black;
+				margin-bottom: 12px;
+				border-radius: 2px;
+			}
+
+			.coffee_btn {
+				background-color: #e9e7e5;
+				width: 50px;
+				height: 50px;
+				position: relative;
+				cursor: pointer;
+				top: 10px;
+				left: 10px;
+				text-align: center;
+				transform: rotate(40deg);
+				border-radius: 30px;
+				box-shadow: 0 0 0px 3px rgb(0, 0, 0);
+			}
+			/* .coffee_btn::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 50px;
+				width: 50px;
+				background-color: #63390ade;
+				transform: rotate(13deg);
+			} */
+			.coffee_btn:hover,
+			.coffee_btn:hover::before {
+				background-color: #000000fd;
+			}
+
+			.coffee_block span {
+				font-size: 24px;
+				font-weight: 700;
+				line-height: 70px;
+				vertical-align: middle;
+				padding-left: 1.5rem;
+				color: white;
+			}
+			#display {
+				width: 100%;
+				height: 240px;
+				background-color: rgba(201, 144, 22, 0.6);
+				border: 1px dotted black;
+				text-align: center;
+				color: whitesmoke;
+				padding: 10px;
+			}
+			#changeBtn {
+				background-color: rgba(201, 144, 22);
+				border: 1px solid black;
+			}
+			/* #fiftyRub {
+				position: absolute;
+				z-index: 1000;
+			} */
+
+			img[src$="rub.jpg"]:hover {
+				filter: contrast(150%);
+				cursor: pointer;
+			}
+			img[src$="rub.png"]:hover {
+				filter: contrast(150%);
+				cursor: pointer;
+			}
+			/* img[src$="rub.png"]:active {
+				visibility: hidden;
+			} */
+
+			.animated {
+				animation-name: hide-bill;
+				animation-duration: 0.3s;
+				animation-timing-function: ease;
+			}
+			@keyframes hide-bill {
+				0% {
+					transform: rotate(-90deg) rotateY(1deg);
+					opacity: 1;
+				}
+				100% {
+					transform: rotate(-90deg) rotateY(70deg);
+					opacity: 0;
+				}
+			}
+			.bi {
+				font-size: 1.5rem;
+				color: white;
+			}
+			#changeBox {
+				position: relative;
+				margin-top: 40px;
+				width: 200px;
+				height: 255px;
+				background-color: rgb(204, 200, 200);
+				border: 4px solid black;
+			}
+			img[src$="rub.png"] {
+				width: 63px;
+				height: 63px;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container mt-5">
+			<div class="row mb-5">
+				<!-- Колонка слева -->
+				<div class="col-lg-6">
+					<div class="row coffee_block">
+						<div class="coffee_btn" onclick="getCoffee(120, 'Латте')"></div>
+						<span>Латте - 120 руб.</span>
+					</div>
+					<div class="row coffee_block">
+						<div class="coffee_btn" onclick="getCoffee(135, 'Капучино')"></div>
+						<span>Капучино - 135 руб.</span>
+					</div>
+					<div class="row coffee_block">
+						<div class="coffee_btn" onclick="getCoffee(150, 'Моккачино')"></div>
+						<span>Моккачино - 150 руб.</span>
+					</div>
+					<div class="row coffee_block">
+						<div class="coffee_btn" onclick="getCoffee(99, 'Эспрессо')"></div>
+						<span>Эспрессо - 99 руб.</span>
+					</div>
+					<div class="row coffee_block">
+						<div class="coffee_btn" onclick="getCoffee(109, 'Американо')"></div>
+						<span>Американо - 109 руб.</span>
+					</div>
+					<div class="row coffee_block">
+						<div class="coffee_btn" onclick="getCoffee(78, 'Чай')"></div>
+						<span>Шоколад - 78 руб.</span>
+					</div>
+				</div>
+				<!-- Колонка справа -->
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-md-6">
+							<div id="display">
+								<p id="displayInfo">Внесите деньги</p>
+								<p id="balance">Баланс: 0 руб.</p>
+								<div class="progress" hidden>
+									<div
+										class="progress-bar progress-bar-striped bg-success"
+										role="progressbar"
+									></div>
+								</div>
+							</div>
+							<div class="d-flex justify-content-center">
+								<button
+									id="changeBtn"
+									class="btn btn-success btn-lg mt-4"
+									onclick="disable()"
+								>
+									Получить сдачу ->
+								</button>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<input type="hidden" id="money" />
+							<img src="../img/bill_acc.jpg" alt="" />
+							<div id="changeBox"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<img src="../img/50rub.jpg" alt="50rub" data-bill-value="50" />
+			<img src="../img/100rub.jpg" alt="100rub" data-bill-value="100" />
+			<img src="../img/500rub.jpg" alt="500rub" data-bill-value="500" />
+		</div>
+
+		<script>
+			let money = document.getElementById("money");
+			let displayInfo = document.getElementById("displayInfo");
+			let balance = document.getElementById("balance");
+			let bills = document.querySelectorAll("img[src$='rub.jpg']");
+			let bill_acc = document.querySelector("img[src$='bill_acc.jpg']");
+
+			// let test = document.getElementById("test");
+
+			for (bill of bills) {
+				bill.onmousedown = function (e) {
+					bill = e.currentTarget;
+					bill.style.position = "absolute";
+					bill.style.zIndex = 1000;
+					bill.style.transform = "rotate(90deg)";
+
+					//Устанавливаем слушателя
+					document.addEventListener("mousemove", moveElement);
+
+					//По отпусканию лкм удаляем слушателя
+					bill.onmouseup = function () {
+						document.removeEventListener("mousemove", moveElement);
+						bill.style.zIndex = 1;
+						let bill_top = bill.getBoundingClientRect().top;
+						let bill_left = bill.getBoundingClientRect().left;
+						let bill_right = bill.getBoundingClientRect().right;
+
+						let bill_acc_top = bill_acc.getBoundingClientRect().top;
+						let bill_acc_left = bill_acc.getBoundingClientRect().left;
+						let bill_acc_right = bill_acc.getBoundingClientRect().right;
+						let bill_acc_bottom =
+							bill_acc.getBoundingClientRect().bottom -
+							(bill_acc.getBoundingClientRect().height / 3) * 2;
+
+						if (
+							bill_top > bill_acc_top &&
+							bill_left > bill_acc_left &&
+							bill_right < bill_acc_right &&
+							bill_top < bill_acc_bottom
+						) {
+							bill.classList.add("animated");
+							setTimeout(function () {
+								bill.hidden = true;
+							}, 280);
+							money.value = +money.value + +bill.dataset.billValue;
+							balance.innerHTML = `<i class="bi bi-piggy-bank"></i> Баланс: ${money.value} руб.`;
+						}
+					};
+					//Отслеживаем координаты
+					function moveElement(event) {
+						let x = event.clientX - 148;
+						let y = event.clientY - 62;
+
+						bill.style.top = y + "px";
+						bill.style.left = x + "px";
+					}
+				};
+				//Отключаем поведение браузера по умолчанию
+				bill.ondragstart = function () {
+					return false;
+				};
+			}
+
+			function getCoffee(price, name) {
+				if (money.value >= price) {
+					money.value -= price;
+					balance.innerHTML = `<i class="bi bi-piggy-bank"></i> Баланс: ${money.value} руб.`;
+					startProgressBar(name);
+				} else {
+					displayInfo.innerHTML =
+						"На " +
+						name +
+						" не хватило денег. <i class='bi bi-emoji-frown'></i>";
+				}
+			}
+
+			function disable() {
+				if (money.value <= 0) {
+					disabled = true;
+				} else {
+					getChange(money.value);
+				}
+			}
+
+			function getChange(num) {
+				let coin;
+				let top = getRandom(2, changeBox.getBoundingClientRect().height - 72);
+				let left = getRandom(2, changeBox.getBoundingClientRect().width - 72);
+
+				if (num >= 10) coin = 10;
+				else if (num >= 5) coin = 5;
+				else if (num >= 2) coin = 2;
+				else if (num >= 1) coin = 1;
+				else if ((num = 0))
+					document.getElementById("changeBtn").disabled = true;
+				console.log(coin);
+
+				changeBox.innerHTML += `<img src="/img/${coin}rub.png" style="top:${top}px; left:${left}px" onclick="removeCoin(this)">`;
+
+				if (num - coin !== 0) {
+					getChange(num - coin);
+				} else if (money.value > 0) {
+					money.value -= money.value;
+					balance.innerHTML = `<i class="bi bi-piggy-bank"></i> Баланс: ${money.value} руб.`;
+				}
+			}
+
+			function startProgressBar(coffeeName) {
+				let i = 0;
+				let progressBar = document.querySelector(".progress-bar");
+				progressBar.parentElement.hidden = false;
+
+				displayInfo.innerHTML = `<i class="bi bi-cup-hot"></i> Ваш ${coffeeName} готовится ...`;
+
+				function progress() {
+					i++;
+					progressBar.style.width = i + "%";
+
+					if (i == 100) {
+						clearInterval(timerId);
+						progressBar.parentElement.hidden = true;
+						progressBar.style.width = 0 + "%";
+						displayInfo.innerHTML = `<i class="bi bi-cup-hot-fill"></i> ${coffeeName}  готов!`;
+					}
+				}
+				let timerId = setInterval(progress, 100);
+			}
+			function getRandom(min, max) {
+				return Math.random() * (max - min) + min;
+			}
+
+			function removeCoin(elem) {
+				elem.remove();
+			}
+
+			// for (coinImg of coinsImg) {
+			// 	coinImg.onmousedown = function (e) {
+			// 		coinImg = e.currentTarget;
+			// 		document.addEventListener("click", getCoin);
+			// 		console.log("клик по монетке");
+			// 	};
+			// 	function getCoin(event) {
+			// 		coinsImg.style.visibility = "hidden";
+			// 	}
+			// }
+
+			// for(let i = 0; i < coinsImg.length; i++) {
+			// 	coinsImg[i].onmousedown = function() {
+			// 		console.log("click on coin")
+			// 	}
+			// }
+
+			// 		//Устанавливаем слушателя
+			// 		document.addEventListener("mousemove", moveElement);
+
+			// 		//По отпусканию лкм удаляем слушателя
+			// 		coinImg.onmouseup = function () {
+			// 			document.removeEventListener("mousemove", moveElement);
+			// 			coinImg.style.zIndex = 1;
+			// 		};
+			// 	};
+			// 	function moveElement(event) {
+			// 		let x = event.clientX - 148;
+			// 		let y = event.clientY - 62;
+
+			// 		coinImg.style.top = y + "px";
+			// 		coinImg.style.left = x + "px";
+			// 	}
+			// 	coinImg.ondragstart = function () {
+			// 		return false;
+			// 	};
+			// }
+
+			//  function oldGetChange(num) {
+			//  	if (num >= 10) {
+			// 		console.log(10);
+			// 		getChange(num - 10);
+			// 	} else if (num >= 5) {
+			// 		console.log(5);
+			// 		getChange(num - 5);
+			// 	} else if (num >= 2) {
+			// 		console.log(2);
+			// 		getChange(num - 2);
+			// 	} else if (num >= 1) {
+			// 		console.log(1);
+			// 		getChange(num - 1);
+			// 	}
+			// }
+
+			// function ternGetChange(num) {
+			// 	let coin = num >= 10 ? 10 : num >= 5 ? 5 : num >= 2 ? 2 : num >= 1 ? 1 : "Вся сдача выдана";
+			// 	console.log(coin);
+			// 	if (num - coin !== 0) {
+			// 		ternGetChange(num - coin);
+			// 	}
+			// }
+
+			//  for(let i = 0; i < bills.length; i++) {
+			// 	bills[i].onmousedown = function() {
+			// 		console.log("Click on bill!");
+			// 	}
+			// }
+			// bills.forEach(function (num) {
+			// 	num.onmousedown = function () {
+			// 		console.log("Click on bill!");
+			// 	};
+			// });
+		</script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+			integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>

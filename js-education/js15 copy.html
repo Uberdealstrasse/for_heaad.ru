@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>JS15</title>
+	</head>
+	<body>
+		<input  id="input" placeholder="Введите число!">
+		<input  id="square" placeholder="Здесь появится результат">
+		<button onclick="btnClick()" id="button" >Нажми на меня</button>
+
+		<script>
+			let input = document.getElementById('input');
+			let square = document.getElementById('square');
+			
+
+			function btnClick() {
+  		square.value = input.value**2;
+}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Взаимодействие с DOM</title>
+	</head>
+	<style>
+		#airplane {
+			position: absolute;
+		}
+		#bomb {
+			width: 50px;
+			position: absolute;
+			top: 0;
+			left: 45%;
+			opacity: 0;
+		}
+		@keyframes a2 {
+			0% {
+				opacity: 1;
+				top: 17%;
+			}
+			100% {
+				opacity: 1;
+				top: 100%;
+				transform: translateY(-100%);
+			}
+		}
+
+		body {
+			background-color: rgba(174, 208, 211, 0.103);
+		}
+	</style>
+	<body>
+		<div>
+			<img src="../img/airplane.gif" alt="" id="airplane" />
+			<img src="../img/bomb.gif" alt="" id="bomb" />
+		</div>
+		<script>
+			let airplaneImg = document.getElementById("airplane");
+			let bombImg = document.getElementById("bomb");
+			let step = 0;
+			let flag = true;
+
+			function animation() {
+				if (window.innerWidth - 210 > step && flag) {
+					airplaneImg.style.transform = "scaleX(1)";
+					step = step + 1;
+				} else {
+					flag = step == 0 ? true : false;
+					airplaneImg.style.transform = "scaleX(-1)";
+					step = step - 1;
+				}
+				if (Math.round(window.innerWidth / 2) == step + 200) {
+					console.log("Я достиг середины экрана. Самолет");
+					bombImg.style.animation = "a2 5s 0s linear forwards";
+				}
+				airplaneImg.style.left = step + "px";
+			}
+
+			setInterval(animation, 1);
+		</script>
+	</body>
+</html>
